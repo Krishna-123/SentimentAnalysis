@@ -1,0 +1,23 @@
+
+.backgroundColor{
+	background-color: #e3dcdc;
+	margin-bottom: 150px;
+
+}
+
+
+.panel-primary > .panel-heading {
+    color: #fff;
+    background-color: #ad1d28;
+    border-color: #ad1d28;
+}
+
+.reviewsColor{
+	color: #000;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #ad1d28;
+    border-color: #ad1d28;
+}

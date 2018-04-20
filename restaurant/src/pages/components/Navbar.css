@@ -1,0 +1,34 @@
+.listitem {
+	padding: 10px;
+	}
+.search{
+	padding: 5px; 
+	margin-left: 20px;
+	margin-right: 20px;
+	text-align: center;
+}
+
+.navColor{
+	    background-color: #ad1d28;
+    	border-color: #911821;
+        border-top-color: rgb(145, 24, 33);
+        border-right-color: rgb(145, 24, 33);
+        border-bottom-color: rgb(145, 24, 33);
+        border-left-color: rgb(145, 24, 33);
+
+}
+
+b, .icon{
+	color: #ffffff;
+  
+}
+
+.navbar-default{
+    background-color: #ad1d28;
+	border-color: #980909;
+    border-top-color: rgb(152, 9, 9);
+    border-right-color: rgb(152, 9, 9);
+    border-bottom-color: rgb(152, 9, 9);
+    border-left-color: rgb(152, 9, 9);
+
+}

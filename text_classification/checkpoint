@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/krishna/SentimentAnalysis/tfClassifier/text_classification/model.tflearn"
+all_model_checkpoint_paths: "/home/krishna/SentimentAnalysis/tfClassifier/text_classification/model.tflearn"
