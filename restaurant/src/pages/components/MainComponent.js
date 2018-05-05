@@ -20,7 +20,7 @@ export default class MainComponent extends Component{
 	  $.ajax({
 	      url: url,
 	      dataType: 'json',
-	      type: 'POST',
+	      type: 'GET',
 	      cache:false,
 	      data:{
 	        Switch:'on',

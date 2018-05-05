@@ -3,9 +3,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var cors = require('cors');
-var MongoClient = require('mongodb').MongoClient;
+var MongoClient = require('mongodb').MongoClient;// npm install mongodb --save
 var url = "mongodb://Krishna123:vkrishna123@ds149309.mlab.com:49309/resturantsdetails";
 const port = process.env.PORT || 3001;
+var request = require('ajax-request');
 
 var details = {
 	id:[],
@@ -17,6 +18,8 @@ var details = {
 	reviews:[]
 }
 
+
+
 	app.use(cors());      // to support JSON-encoded bodies
 	app.use( bodyParser.json() );       // to support JSON-encoded bodies
 	app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -26,8 +29,8 @@ var details = {
 	app.use(express.json());       // to support JSON-encoded bodies
 	app.use(express.urlencoded()); // to support URL-encoded bodies
 
-	app.post('/homerender.json', (req, res) => {
-    console.log('post is received for home page');
+	app.get('/homerender.json', (req, res) => { //es6 style
+    console.log('get is received for home page');
     MongoClient.connect(url, function(err, dbo) {
 	    if (err) throw err;
 	    // var query = { id: 1 };
@@ -53,13 +56,59 @@ var details = {
 	 
 	});
 
-	app.post('/specific', (req, res) => {
-		  console.log('post is received for specific page ' + req.query.id);
+	app.get('/specific', (req, res) => {
+		  console.log('get is received for specific page ' + req.query.id);
+		  var id = req.query.id - 1 ;
+
+		  var SpecificDetails = {
+   		  	id : details.id[id],
+   		  	name: details.name[id],
+			address: details.address[id],
+			rating: details.rating[id],
+			facilities: details.facilities[id],
+			openingTimes: details.openingTimes[id],
+			reviews: details.reviews[id]
+   		  };
+
+		  console.log(SpecificDetails);
 		  res.setHeader('Cache-Control', 'no-cache');
-   		  res.json(details);
+   		  res.json(SpecificDetails);
 	});
 
-app.listen(port, function () {
+	app.post('/addreview', (req, res) => {
+		var name  = req.body.author,
+			review = req.body.reviewText;
+
+		console.log("post received as new review is added " + name )
+		console.log("post received as new review is added " + review )
+		addReview(review)	
+		 res.setHeader('Cache-Control', 'no-cache');
+   		 res.json("{success}");
+	});
+
+
+	app.post('/addtodatabase', (req,res) => {
+		console.log("data stored into database is " + req.body.author);
+
+		 res.setHeader('Cache-Control', 'no-cache');
+   		 res.json("{success}");
+
+	})
+
+
+ // var addReview = function (review) {
+	//   var url="http://localhost:3002";
+	
+	//  request.post(url, {json: true, body: {"review":review}}, function(err, res, body) {
+ //      if (!err && res.statusCode === 200) {
+ //         console.log("success")
+ //      }
+ //    });
+	// }	
+
+
+
+app.listen(port,  function () {
   console.log("server is created!!");
 })
 
