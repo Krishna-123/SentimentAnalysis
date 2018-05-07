@@ -18,8 +18,6 @@ var details = {
 	reviews:[]
 }
 
-
-
 	app.use(cors());      // to support JSON-encoded bodies
 	app.use( bodyParser.json() );       // to support JSON-encoded bodies
 	app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -88,28 +86,34 @@ var details = {
 
 
 	app.post('/addtodatabase', (req,res) => {
-		console.log("data stored into database is " + req.body.restaurantID);
+		
 		var restaurantId = req.body.restaurantID;
-
-		var reviewDetails = [];
-		reviewDetails = details.reviews[restaurantId-1];
- 		reviewDetails.push(req.body.restaurantReview)
-
- 		console.log("complete reviews are :- \n\n\t" + reviewDetails[reviewDetails.length-1].author )
+		
+		console.log("here is the thing to check :- " + req.body.restaurantReview.author +
+		     "\nhere is the review :- " + req.body.restaurantReview.reviewText )
+		
+		author =  req.body.restaurantReview.author
+		review = req.body.restaurantReview.reviewText 
+		rating = req.body.restaurantReview.rating 
+		var Rid = 	4
+		
 	  MongoClient.connect(url, function(err, dbo) {
 	     if (err) throw err;
-	    var query = { id: restaurantId };
-	    
-	    var newReviews = {reviews : reviewDetails};
-
+	    var query = { id: 5 }
+	    query.id = Rid
+		 console.log("id of the resturant is :- " + query.id)	    
 	    var database = dbo.db('resturantsdetails');
-	    database.collection("resturants").findOneAndUpdate(query,  { $push: { reviews: reviewDetails  } },
-	     function(err, resturants) {
+	    database.collection("resturants").update( query,  
+	    	{ $push: {reviews: { author: author, reviewText: review, rating: rating } 
+	 	
+	 	 } 
+	   } ,
+	    function(err, resturants) {
 	    if (err) throw err;
 	    console.log("document updated successfully!")
 	    dbo.close();
 		res.setHeader('Cache-Control', 'no-cache');
-   		res.json(details);
+   		res.json("{success}");
 	    });
          
       }); 

@@ -1,8 +1,9 @@
 import time
-# import classify_text as ct
+import classify_text as ct
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse
 import json
+from signal import signal, SIGPIPE, SIG_DFL
 
 HOST_NAME = 'localhost'
 PORT_NUMBER = 3002
@@ -26,24 +27,27 @@ class MyHandler(BaseHTTPRequestHandler):
         body_post = dict(qc.split("=") for qc in body.split("&"))
         review = body_post['reviewText']
         print (review)
-        # self.category = ct.get_sentence(review)
-        # print ("category :- " + self.category)
-        self.respond({'status': 200})
+        self.category = ct.get_sentence(review)
+        # self.category = "testing"
+        self.respond({'category': self.category})
         
 
    
     def respond(self, opts):
-       
-        # self.send_response(opts['status'])
-        content = "<html><body><h1>POST!</h1></body></html>"
-        res = bytes(content, 'UTF-8')
+        # print("self" + self);
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
-
-        self.wfile.write(res)
-
-       
-        
-        # self.end_headers()
+        self.end_headers()
+        # category = self.category
+        content = "{\"category\": \"%s\"}"%self.category ;
+        print ("content" + content);
+        res = bytes(content, 'UTF-8')
+        try:
+            self.wfile.write(res)
+        except:
+            signal(SIGPIPE,SIG_DFL)
+            pass   
 
 
 if __name__ == '__main__':
@@ -56,3 +60,5 @@ if __name__ == '__main__':
         httpd.server_close()
         pass
     print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
+
+
