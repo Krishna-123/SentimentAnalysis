@@ -88,24 +88,33 @@ var details = {
 
 
 	app.post('/addtodatabase', (req,res) => {
-		console.log("data stored into database is " + req.body.author);
+		console.log("data stored into database is " + req.body.restaurantID);
+		var restaurantId = req.body.restaurantID;
 
-		 res.setHeader('Cache-Control', 'no-cache');
-   		 res.json("{success}");
+		var reviewDetails = [];
+		reviewDetails = details.reviews[restaurantId-1];
+ 		reviewDetails.push(req.body.restaurantReview)
+
+ 		console.log("complete reviews are :- \n\n\t" + reviewDetails[reviewDetails.length-1].author )
+	  MongoClient.connect(url, function(err, dbo) {
+	     if (err) throw err;
+	    var query = { id: restaurantId };
+	    
+	    var newReviews = {reviews : reviewDetails};
+
+	    var database = dbo.db('resturantsdetails');
+	    database.collection("resturants").findOneAndUpdate(query,  { $push: { reviews: reviewDetails  } },
+	     function(err, resturants) {
+	    if (err) throw err;
+	    console.log("document updated successfully!")
+	    dbo.close();
+		res.setHeader('Cache-Control', 'no-cache');
+   		res.json(details);
+	    });
+         
+      }); 
 
 	})
-
-
- // var addReview = function (review) {
-	//   var url="http://localhost:3002";
-	
-	//  request.post(url, {json: true, body: {"review":review}}, function(err, res, body) {
- //      if (!err && res.statusCode === 200) {
- //         console.log("success")
- //      }
- //    });
-	// }	
-
 
 
 app.listen(port,  function () {

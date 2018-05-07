@@ -91,22 +91,31 @@ export default class SpecificRes extends Component{
 	      	"author":  this.state.name,
 	      	"reviewText": this.state.review
 	      },
-	      success: function() {
-	        console.log('success');
-	      }.bind(this),
-	      
-	      error: function(xhr, status, err) {
-	          console.error(url, status, err.toString());
-	          console.log('fail to post');
-	          	
+	      success: function(Data) {
+	        console.log('success server  ' + Data.category); 
+
 	          review.author = this.state.name;
 	          review.reviewText = this.state.review;
-	          review.rating = 5;
+	          if (Data.category === "positive") {
+	              review.rating = 5;
+	          }
+	          else{
+	          	  review.rating = 3;		
+	          }
 	          temp = this.state.allreviews;
 	          temp.push(review)
 	          this.setState({allreviews:temp})
 	          this.addReviewDatabase(this.props.id , review)
 
+
+	      }.bind(this),
+	      
+	      error: function(xhr, status, err) {
+	          console.error(url, status, err.toString());
+	          console.log('fail to post');
+	          console.log("data to send :- " + this.state.name);
+
+	         
 	      }.bind(this)
 	  });
 	}	
