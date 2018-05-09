@@ -1,0 +1,2 @@
+model_checkpoint_path: "D:\\SentimentAnalysis\\text_classification\\model.tflearn"
+all_model_checkpoint_paths: "D:\\SentimentAnalysis\\text_classification\\model.tflearn"
