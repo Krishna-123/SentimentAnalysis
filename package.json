@@ -1,0 +1,30 @@
+{
+  "name": "restaurant",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "ajax-request": "^1.2.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "http": "0.0.0",
+    "jquery": "^3.3.1",
+    "material-ui": "^1.0.0-beta.41",
+    "mongodb": "^3.0.7",
+    "mongoose": "^5.0.15",
+    "nodemon": "^1.17.3",
+    "react": "^16.3.2",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.3.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-router": "^3.*"
+  }
+}
